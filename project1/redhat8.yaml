@@ -1,0 +1,14 @@
+#cloud-config
+
+package_upgrade: false
+
+mounts:
+
+runcmd:
+  - until [ -e /dev/disk/azure/scsi1/lun0 ]; do sleep 5; done
+  - mkfs.ext4  /dev/disk/azure/scsi1/lun0
+  - mkdir /data
+  - mount /dev/disk/azure/scsi1/lun0  /data
+  - echo "/dev/disk/azure/scsi1/lun0  /data ext4 defaults 0 0" >> /etc/fstab
+  - echo  redhat:rhel:8_x:latest >  /data/extension_is_done
+

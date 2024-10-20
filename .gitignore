@@ -1,0 +1,8 @@
+*.out
+.terraform*
+terraform*
+*.plan
+tutorial
+*.pem
+*.crt
+*state
