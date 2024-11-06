@@ -14,7 +14,7 @@ resource "azurerm_network_security_group"  "nsg" {
     source_address_prefix       = "AzureCloud"
     source_port_range           = "*"
     destination_address_prefix  = "*"
-    destination_port_range      = "22"
+    destination_port_ranges     = ["22", "3389"]
   }
 
   tags = {

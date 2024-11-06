@@ -1,0 +1,15 @@
+#cloud-config
+
+package_upgrade: false
+
+
+runcmd:
+  - until [ -e /dev/disk/azure/scsi1/lun0 ]; do sleep 5; done
+  - vgcreate testvg /dev/disk/azure/scsi1/lun0
+  - lvcreate -n testlv -l 100%FREE testvg
+  - mkfs.ext4 /dev/mapper/testvg-testlv
+  - mkdir /data
+  - mount /dev/mapper/testvg-testlv /data
+  - echo "/dev/mapper/testvg-testlv /data ext4 defaults 0 0" >> /etc/fstab
+  - echo  redhat:rhel:8_5:latest >  /data/extension_is_done
+

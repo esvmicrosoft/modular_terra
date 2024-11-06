@@ -20,10 +20,8 @@ module machines {
   offer           = var.payg[count.index]["offer"]
   sku             = var.payg[count.index]["sku"]
   image_version   = var.payg[count.index]["image_version"]
-#  avsetid         = ""
 
   custom_data    =  var.payg[count.index]["custom_data"]
-
 #  keyvaultid      = azurerm_key_vault.diskencrypt.id
 #  keyvaulturi     = azurerm_key_vault.diskencrypt.vault_uri
 #  diskencryptkey  = azurerm_key_vault_key.diskencrypt.id

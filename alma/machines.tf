@@ -37,3 +37,6 @@ module machines {
   location        = var.location
 }
 
+output "ips" {
+  value = [ module.machines[*].ip_address ]
+}

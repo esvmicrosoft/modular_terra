@@ -53,6 +53,13 @@ variable "image_version" {
 
 variable "custom_data" {
   description = "custom datafile to use"
+  default = "/dev/null"
+}
+
+variable "dns_server" {
+  description = "custom DNS IP address"
+  default = null
+  type = list
 }
 
 # variable "keyvaultid" {
@@ -73,4 +80,9 @@ variable "custom_data" {
 variable "encrypt" {
   description = "whether to encrypt the machine or not"
   default     = false
+}
+
+variable "avsetid" {
+  description = "Availability set used for VM"
+  default     = null
 }

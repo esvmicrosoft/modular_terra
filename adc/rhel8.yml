@@ -1,0 +1,27 @@
+#cloud-config
+
+package_upgrade: true
+packages:
+  - realmd
+  - oddjob
+  - oddjob-mkhomedir
+  - sssd
+  - sssd-tools
+  - adcli
+  - krb5-workstation
+  - tcpdump
+  - nmap
+#  - samba-common-tools
+
+
+write_files:
+  - path: /etc/dhcp/dhclient.conf
+    append: true
+    content: | 
+       append domain-search "contoso.com";
+
+
+  - path: /etc/hosts
+    append: true
+    content: | 
+      ${CONTROLLER_IP} controller.contoso.com controller 

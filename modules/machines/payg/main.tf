@@ -13,6 +13,7 @@ resource "azurerm_network_interface" "nic0" {
   name                    = "${var.name}-eth0" 
   location                = var.location
   resource_group_name     = var.resource_group
+  dns_servers             =  var.dns_server 
 
 
   ip_configuration {
@@ -31,7 +32,7 @@ data "template_cloudinit_config" "config" {
 
   part { 
     content_type = "text/cloud-config"
-    content   = file("${var.custom_data}")
+    content   = file("${var.custom_data}") 
   }
 }
 
@@ -44,7 +45,9 @@ resource "azurerm_linux_virtual_machine" "machine" {
 
     computer_name          = var.name
     admin_username         = "azureuser"
-    custom_data            = data.template_cloudinit_config.config.rendered
+    custom_data            = data.template_cloudinit_config.config.rendered 
+
+    availability_set_id    = var.avsetid 
 
 #    plan {
 #      publisher =  var.publisher
