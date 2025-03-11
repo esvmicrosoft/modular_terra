@@ -41,7 +41,7 @@ resource "azurerm_linux_virtual_machine" "machine" {
     location               = var.location
     resource_group_name    = var.resource_group
     network_interface_ids  = [azurerm_network_interface.nic0.id]
-    size                   = var.size
+    size                   = "Standard_D2s_v3"
 
     computer_name          = var.name
     admin_username         = "azureuser"
@@ -49,11 +49,11 @@ resource "azurerm_linux_virtual_machine" "machine" {
 
     availability_set_id    = var.avsetid 
 
-#    plan {
-#      publisher =  var.publisher
-#      product   =  var.offer
-#      name      =  var.sku
-#    }
+    plan {
+      publisher =  var.publisher
+      product   =  var.offer
+      name      =  var.sku
+    }
 
     source_image_reference {
       publisher   = var.publisher

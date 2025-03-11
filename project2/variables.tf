@@ -3,11 +3,6 @@ variable "rg_name" {
   description = "Resource Group used by the project"
 }
 
-#variable "now" {
-#  description = "Current time of project deployment"
-#  default = fromdate('YYMMDDHHmmss', timestamp()) 
-#}
-
 variable "location" {
   description = "Location of the project"
 }
@@ -25,7 +20,6 @@ variable "cidr_bits" {
 variable "payg" {
   type = list(object({
     pubip           = bool
-    name            = string
     publisher       = string
     offer           = string
     sku             = string
@@ -36,12 +30,11 @@ variable "payg" {
   default = [
     {
     pubip         = true,
-    name          = "alma8",
-    publisher     = "almalinux",
-    offer         = "almalinux-x86_64",
-    sku           = "8-gen2",
-    image_version = "latest",
-    custom_data   = "/dev/null",
+    publisher     = "redhat",
+    offer         = "rhel",
+    sku           = "88-gen2",
+    image_version = "latest"
+    custom_data   = "/dev/null"
     encrypt       = false
     }
   ]

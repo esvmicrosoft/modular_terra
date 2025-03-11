@@ -8,6 +8,7 @@ resource "random_id" "randomId" {
   byte_length = 8
 }
 
+
 module "myrg" {
   source   = "../modules/rg"
   name     = var.rg_name
@@ -16,7 +17,7 @@ module "myrg" {
 
 
 module "stgacct" {
-  source          = "../modules/stgacct/diag"
+  source          = "../modules/stgacct/nfsv3"
   depends_on      = [ module.myrg ]
   name            = "${var.prefix}diag${random_id.randomId.hex}"
   resource_group  = var.rg_name
@@ -29,12 +30,33 @@ module "network" {
   name            = "${var.rg_name}-vnet"
   location        = var.location
   resource_group  = var.rg_name
-  cidr            = "10.0.0.0/22"
+  cidr            = "10.0.0.0/16"
   cidr_bits       = var.cidr_bits
 }
 
-module "dnszone" {
-  source = "../modules/dnszone"
-  depends_on = [ module.machines ]
-  rg_name = var.rg_name
+resource "azurerm_network_security_group" "nsg" {
+  name                  = "${var.rg_name}-vnet-NSG-CASG"
+  location              = var.location
+  resource_group_name   = var.rg_name
+
+  security_rule {
+    name                       = "vnetaccess"
+    priority                   = 3000
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_address_prefix      = "VirtualNetwork"
+    source_port_range          = "*"
+    destination_address_prefix = "*"
+    destination_port_range     = "*"
+  }
+}
+
+
+resource "azurerm_subnet_network_security_group_association" "subnet_nsg" {
+  depends_on = [ module.network, module.myrg ]
+  count      = length(module.network.subnets_ids)
+
+  subnet_id                 = module.network.subnets_ids[count.index]
+  network_security_group_id = azurerm_network_security_group.nsg.id
 }

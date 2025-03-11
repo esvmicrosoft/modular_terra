@@ -63,6 +63,16 @@ variable "payg" {
     image_version = "latest"
     custom_data   = "mariner3.yml",
     encrypt       = false
+    },
+    {
+    pubip         = true,
+    name          = "rhel8",
+    publisher     = "redhat",
+    offer         = "rhel",
+    sku           = "88-gen2",
+    image_version = "latest"
+    custom_data   = "rhel8.yml",
+    encrypt       = false
     }
   ]
 }

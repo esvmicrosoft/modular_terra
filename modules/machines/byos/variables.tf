@@ -51,12 +51,6 @@ variable "image_version" {
   description = "Image Version"
 }
 
-variable "size" {
-  description = "Machine size to use in deployment"
-  type        = string
-  default     = "Standard_D2s_v3"
-}
-
 variable "custom_data" {
   description = "custom datafile to use"
   default = "/dev/null"

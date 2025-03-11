@@ -3,11 +3,6 @@ variable "rg_name" {
   description = "Resource Group used by the project"
 }
 
-#variable "now" {
-#  description = "Current time of project deployment"
-#  default = fromdate('YYMMDDHHmmss', timestamp()) 
-#}
-
 variable "location" {
   description = "Location of the project"
 }
