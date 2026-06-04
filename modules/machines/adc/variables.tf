@@ -34,7 +34,7 @@ variable "pubip" {
 
 variable "storage_account" {
   description = "Diagnostics Storage Account"
-  default     = false
+  default     = null
 }
 
 variable "userpassword" {
@@ -45,4 +45,40 @@ variable "userpassword" {
 variable "adsetup" {
   description = "Whether setup an ADC controller or nah!"
   default     = false
+}
+
+variable "size" {
+  description = "Machine SKU size for VM"
+  type        = string
+  default     = "Standard_D2s_v3"
+}
+
+variable "publisher" {
+  description = "Image Publisher"
+  type        = string
+  default     = "MicrosoftWindowsServer"
+}
+
+variable "offer" {
+  description = "Image Offer"
+  type        = string
+  default     = "windowsServer"
+}
+
+variable "sku" {
+  description = "Image SKU"
+  type        = string
+  default     = "2022-datacenter-smalldisk-g2"
+}
+
+variable "image_version" {
+  description = "Image version"
+  type        = string
+  default     = "latest"
+}
+
+variable "custom_domain" {
+  description = "Domain name to generate"
+  type        = string
+  default     = "azurelinux.com"
 }

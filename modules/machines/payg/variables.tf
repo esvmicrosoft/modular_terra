@@ -1,4 +1,14 @@
 
+variable "provided" {
+  description = "last modified timestamp" 
+  type = number
+}
+
+variable "required" {
+  description = "last modified timestamp" 
+  default = 20260601
+  type = number
+}
 
 variable "name" {
   description = "defines the name of the machine to use"
@@ -15,23 +25,23 @@ variable "location" {
   type        = string
 }
 
-variable "priv_ip" {
-  description = "NIC IP address"
-  type        = string
+variable "priv_index" {
+  description = "List of cidrs for the network"
+  type       = number
+}
+
+variable "cidr_list" {
+  description = "List of cidrs for the network"
+  type       = list
 }
 
 variable "nic_subnetid" {
   description = "NICs subnet ID"
-  type        = string
+  type        = list
 }
 
 variable "pubip" {
   description = "Assign public ip or not"
-  default     = false
-}
-
-variable "storage_account" {
-  description = "Diagnostics Storage Account"
   default     = false
 }
 
@@ -59,7 +69,7 @@ variable "size" {
 
 variable "custom_data" {
   description = "custom datafile to use"
-  default = "/dev/null"
+  default = "Cg=="
 }
 
 variable "dns_server" {
@@ -68,27 +78,47 @@ variable "dns_server" {
   type = list
 }
 
-# variable "keyvaultid" {
-#   description = "Azure keyvault id for disk encryption"
-#   type  = string
-# }
+variable "network_acceleration" {
+  description = "Assign public ip or not"
+  default     = false
+}
 
-# variable "keyvaulturi" {
-#   description = "Azure keyvault URI for disk encryption"
-#   type  = string
-# }
+variable "keyvaultid" {
+  description = "Azure keyvault id for disk encryption"
+  type  = string
+  default = null
+}
 
-# variable "diskencryptkey" {
-#   description = "key used for disk encryption"
-#   type  = string
-# }
+variable "keyvaulturi" {
+  description = "Azure keyvault URI for disk encryption"
+  type  = string
+  default = null
+}
+
+variable "diskencryptkey" {
+  description = "key used for disk encryption"
+  type  = string
+  default  = null
+}
 
 variable "encrypt" {
   description = "whether to encrypt the machine or not"
   default     = false
 }
 
+variable "storage_account" {
+  description = "Storage Account used for boot diagnostics"
+  type        = string
+  default     = null
+}
+
 variable "avsetid" {
   description = "Availability set used for VM"
   default     = null
+}
+
+variable "nics" {
+  description = "Number of network interface cards (must be the same or lower than the number of subnets)"
+  type        = string
+  default     = "1"
 }

@@ -30,6 +30,11 @@ variable "pubip" {
   default     = false
 }
 
+variable "network_acceleration" {
+  description = "Assign public ip or not"
+  default     = false
+}
+
 variable "storage_account" {
   description = "Diagnostics Storage Account"
   default     = false
@@ -51,9 +56,15 @@ variable "image_version" {
   description = "Image Version"
 }
 
+variable "size" {
+  description = "Machine size to use in deployment"
+  type        = string
+  default     = "Standard_D2s_v3"
+}
+
 variable "custom_data" {
   description = "custom datafile to use"
-  default = "/dev/null"
+  default = "Cg=="
 }
 
 variable "dns_server" {

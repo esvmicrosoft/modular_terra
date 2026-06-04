@@ -7,8 +7,8 @@ Install-ADDSForest `
   -CreateDnsDelegation:$false `
   -DatabasePath 'C:\windows\NTDS' `
   -DomainMode 'WinThreshold' `
-  -DomainName 'contoso.com' `
-  -DomainNetbiosName 'CONTOSO' `
+  -DomainName 'azurelinux.com' `
+  -DomainNetbiosName 'AZURELINUX' `
   -ForestMode 'WinThreshold' `
   -InstallDns:$true `
   -LogPath 'C:\windows\NTDS' `

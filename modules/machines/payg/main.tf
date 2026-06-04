@@ -9,30 +9,21 @@ resource "azurerm_public_ip" "public_ip_address" {
     ip_version          = "IPv4"
 }
 
-resource "azurerm_network_interface" "nic0" {
-  name                    = "${var.name}-eth0" 
+resource "azurerm_network_interface" "nics" {
+  count = var.nics  
+  name                    = "${var.name}-eth${count.index}" 
   location                = var.location
   resource_group_name     = var.resource_group
-  dns_servers             =  var.dns_server 
-
+  dns_servers             = var.dns_server 
+  accelerated_networking_enabled = var.network_acceleration
 
   ip_configuration {
-    name                           = "${var.name}-eth0_priv"
-    subnet_id                      = var.nic_subnetid
+    name                           = "${var.name}-eth${count.index}_priv"
+    subnet_id                      = var.nic_subnetid[count.index]
     private_ip_address_allocation  = "Static"
-    private_ip_address             = var.priv_ip
+    private_ip_address             = cidrhost(var.cidr_list[count.index], var.priv_index)
     primary                        = "true"
-    public_ip_address_id           = var.pubip ? azurerm_public_ip.public_ip_address[0].id : null
-  }
-}
-
-data "template_cloudinit_config" "config" {
-  gzip = true
-  base64_encode  =  true
-
-  part { 
-    content_type = "text/cloud-config"
-    content   = file("${var.custom_data}") 
+    public_ip_address_id           = var.pubip && count.index == 0 ? azurerm_public_ip.public_ip_address[0].id : null
   }
 }
 
@@ -40,20 +31,14 @@ resource "azurerm_linux_virtual_machine" "machine" {
     name                   = var.name
     location               = var.location
     resource_group_name    = var.resource_group
-    network_interface_ids  = [azurerm_network_interface.nic0.id]
+    network_interface_ids  = azurerm_network_interface.nics[*].id 
     size                   = var.size
 
     computer_name          = var.name
     admin_username         = "azureuser"
-    custom_data            = data.template_cloudinit_config.config.rendered 
+    custom_data            = var.custom_data
 
     availability_set_id    = var.avsetid 
-
-#    plan {
-#      publisher =  var.publisher
-#      product   =  var.offer
-#      name      =  var.sku
-#    }
 
     source_image_reference {
       publisher   = var.publisher
@@ -64,7 +49,7 @@ resource "azurerm_linux_virtual_machine" "machine" {
 
     os_disk {
       caching              = "None"
-      storage_account_type = "StandardSSD_LRS"
+      storage_account_type = "Standard_LRS"
       disk_size_gb = var.publisher == "microsoftcblmariner" ? 30 : null
     }
 

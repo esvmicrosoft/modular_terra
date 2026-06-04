@@ -1,29 +1,3 @@
-
-# Generate random text for a unique storage account name
-resource "random_id" "randomId" {
-  keepers = {
-    # Generate a new ID only when a new resource group is defined
-    resource_group = var.rg_name
-  }
-  byte_length = 8
-}
-
-
-module "myrg" {
-  source   = "../modules/rg"
-  name     = var.rg_name
-  location = var.location
-}
-
-
-module "stgacct" {
-  source          = "../modules/stgacct/nfsv3"
-  depends_on      = [ module.myrg ]
-  name            = "${var.prefix}diag${random_id.randomId.hex}"
-  resource_group  = var.rg_name
-  location        = var.location
-}
-
 module "network" {
   source          = "../modules/network"
   depends_on      = [ module.myrg ]
@@ -35,10 +9,22 @@ module "network" {
 }
 
 resource "azurerm_network_security_group" "nsg" {
-  name                  = "${var.rg_name}-vnet-NSG-CASG"
+  name                  = "${var.rg_name}-vnet-SG-CASG"
+  depends_on            = [ module.myrg ]
   location              = var.location
   resource_group_name   = var.rg_name
 
+  security_rule {
+    name                       = "azcloud"
+    priority                   = 2000
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_address_prefix      = "AzureCloud"
+    source_port_range          = "*"
+    destination_address_prefix = "*"
+    destination_port_ranges    = ["22","3389"]
+  }
   security_rule {
     name                       = "vnetaccess"
     priority                   = 3000

@@ -33,7 +33,7 @@ variable "payg" {
     pubip         = true,
     name          = "sles12sap",
     publisher     = "suse",
-    offer         = "sles-sap-12-sp5",
+    offer         = "sles-sap-15-sp5",
     sku           = "gen2",
     image_version = "latest"
     custom_data   = "/dev/null"

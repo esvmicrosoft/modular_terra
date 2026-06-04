@@ -1,0 +1,25 @@
+#cloud-config
+package_upgrade: false
+
+write_files:
+  - path: /etc/NetworkManager/conf.d/99-azure-unmanaged_with_mana.conf
+    defer: true
+    permissions: 0600
+    content: |
+      # Ignore SR-IOV interface on Azure, since it's transparently bonded
+      # to the synthetic interface
+      [keyfile]
+      unmanaged-devices=driver:mlx4_core;driver:mlx5_core;driver:mana
+
+runcmd:
+  - dnf update -y --disablerepo='*' --enablerepo='*rhui*'
+  - dnf install -y nfs-utils
+  - systemctl enable nfs-server
+  - mkdir /exports
+  - chmod 755 /exports
+  - echo '/exports 10.0.0.0/8(rw,sync,no_root_squash)' > /etc/exports
+  - sed -i -e '/vers3/s/^# *//' /etc/nfs.conf
+  - systemctl disable firewalld
+  - systemctl mask firewalld
+  - reboot
+

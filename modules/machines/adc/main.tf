@@ -29,17 +29,17 @@ resource "azurerm_windows_virtual_machine" "machine" {
     location               = var.location
     resource_group_name    = var.resource_group
     network_interface_ids  = [azurerm_network_interface.nic0.id]
-    size                   = "Standard_D2s_v3"
+    size                   = var.size
 
     computer_name          = var.server_name
     admin_username         = "azureadmin"
     admin_password         = var.userpassword
 
     source_image_reference {
-      publisher   = "MicrosoftWindowsServer"
-      offer       = "WindowsServer"
-      sku         = "2022-datacenter-smalldisk-g2"
-      version     = "latest"
+      publisher   = var.publisher
+      offer       = var.offer
+      sku         = var.sku
+      version     = var.image_version
     }
 
     os_disk {
@@ -54,6 +54,9 @@ resource "azurerm_windows_virtual_machine" "machine" {
 
 data template_file "adcsetup" {
     template = file("${path.module}/customscript.ps1")
+    vars = {
+        DOMAIN = var.custom_domain
+    }
 }
 
 resource "azurerm_virtual_machine_extension" "adc_setup" {

@@ -14,7 +14,7 @@ resource "azurerm_network_interface" "nic0" {
   location                = var.location
   resource_group_name     = var.resource_group
   dns_servers             =  var.dns_server 
-
+  accelerated_networking_enabled = var.network_acceleration
 
   ip_configuration {
     name                           = "${var.name}-eth0_priv"
@@ -26,26 +26,26 @@ resource "azurerm_network_interface" "nic0" {
   }
 }
 
-data "template_cloudinit_config" "config" {
-  gzip = true
-  base64_encode  =  true
-
-  part { 
-    content_type = "text/cloud-config"
-    content   = file("${var.custom_data}") 
-  }
-}
+# data "template_cloudinit_config" "config" {
+#   gzip = true
+#   base64_encode  =  true
+# 
+#   part { 
+#     content_type = "text/cloud-config"
+#     content   = file("${var.custom_data}") 
+#   }
+# }
 
 resource "azurerm_linux_virtual_machine" "machine" {
     name                   = var.name
     location               = var.location
     resource_group_name    = var.resource_group
     network_interface_ids  = [azurerm_network_interface.nic0.id]
-    size                   = "Standard_D2s_v3"
+    size                   = var.size
 
     computer_name          = var.name
     admin_username         = "azureuser"
-    custom_data            = data.template_cloudinit_config.config.rendered 
+    custom_data            = var.custom_data
 
     availability_set_id    = var.avsetid 
 
@@ -74,7 +74,8 @@ resource "azurerm_linux_virtual_machine" "machine" {
     }
 
     boot_diagnostics {
-        storage_account_uri = var.storage_account
+        # storage_account_uri = var.storage_account
+        storage_account_uri = null
     }
 }
 

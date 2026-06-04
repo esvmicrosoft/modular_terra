@@ -6,9 +6,10 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = var.resource_group
 
   dynamic "subnet" {
-    for_each = range(4)
+    for_each = range(var.subnets)
     content {
       name  = "subnet${subnet.key}"
+      default_outbound_access_enabled = var.outbound_access
       address_prefixes  = [
               cidrsubnet(var.cidr,parseint(var.cidr_bits,10),subnet.key)
       ]

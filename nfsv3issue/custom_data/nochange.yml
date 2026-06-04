@@ -1,0 +1,7 @@
+#cloud-config
+
+package_upgrade: false
+
+runcmd:
+  - date
+

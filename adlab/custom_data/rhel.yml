@@ -6,7 +6,6 @@ packages:
   - oddjob
   - oddjob-mkhomedir
   - sssd
-  - sssd-tools
   - adcli
   - krb5-workstation
   - tcpdump
@@ -17,11 +16,5 @@ packages:
 write_files:
   - path: /etc/dhcp/dhclient.conf
     append: true
-    content: | 
-       append domain-search "contoso.com";
-
-
-  - path: /etc/hosts
-    append: true
-    content: | 
-      ${CONTROLLER_IP} controller.contoso.com controller 
+    content: |
+       append domain-search "contosoi.com";

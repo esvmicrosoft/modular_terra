@@ -23,3 +23,15 @@ variable "cidr_bits" {
   description = "Number of subnet bits to use"
   type        = string
 }
+
+variable "subnets" {
+  description = "How many subnets to make"
+  default = 4
+  type        = string
+}
+
+variable "outbound_access" { 
+  description = "Does the subnet allow outbound access by default"
+  default     = false
+  type        = bool
+}
