@@ -11,7 +11,7 @@ module payg {
                          ]
 
   provided             = 20260601
-  name                 = "${var.payg[count.index]["name"]}"
+  name                 = var.payg[count.index]["name"]
   priv_index           = count.index + 6
   cidr_list            = module.network.subnets_cidrs
   nic_subnetid         = module.network.subnets_ids
@@ -25,15 +25,14 @@ module payg {
   size                 = var.payg[count.index]["size"]
   network_acceleration = var.payg[count.index]["network_acceleration"]
   nics                 = var.payg[count.index]["nics"]
+  disk_controller_type = var.payg[count.index]["nvme"] 
 
 #  avsetid             = ""
-#  keyvaultid          = azurerm_key_vault.diskencrypt.id
-#  keyvaulturi         = azurerm_key_vault.diskencrypt.vault_uri
-#  diskencryptkey      = azurerm_key_vault_key.diskencrypt.id
-#  encrypt             = var.payg[count.index]["encrypt"]
+  encrypt             = var.payg[count.index]["encrypt"]
 
-  encrypt              = false
-
+  keyvaultid          = var.payg[count.index]["encrypt"] ? azurerm_key_vault.diskencrypt.id : null
+  keyvaulturi         = var.payg[count.index]["encrypt"] ? azurerm_key_vault.diskencrypt.vault_uri : null
+  diskencryptkey      = var.payg[count.index]["encrypt"] ? azurerm_key_vault_key.diskencrypt.id : null
 
   resource_group       = var.rg_name
   location             = var.location

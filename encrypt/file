@@ -1,0 +1,36 @@
+rg='adetest'
+loc='canadaeast'
+vm='mivm'
+user='azureuser'
+vault='randomvaultesv'
+kek='myKEK'
+key="$HOME/.ssh/azureuser_key.pub"
+
+
+# az group create --name $rg --location $loc 
+
+#az vm create -g $rg -n $vm -l $loc  \
+#  --image Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest \
+#  --size Standard_D2s_v5 \
+#  --admin-username $user \
+#  --ssh-key-values $key \
+#  --storage-sku Standard_LRS \
+#  --public-ip-sku Standard \
+#  --security-type Standard\
+#
+# az keyvault create -n $vault -g $rg -l $loc --enabled-for-disk-encryption true
+az keyvault key create --vault-name $vault -n $kek --protection software
+touch /tmp/keyvault
+
+az keyvault update -n $vault --public-network-access Enabled --bypass AzureServices --default-action Allow -o none
+az keyvault show -n $vault --query "properties.publicNetworkAccess" -o tsv   # debe imprimir: Enabled
+ 
+ 
+az vm encryption enable -g $rg -n $vm \
+  --disk-encryption-keyvault $vault \
+  --key-encryption-key $kek \
+  --key-encryption-keyvault $vault \
+  --volume-type All
+
+az vm encryption show -g $rg -n $vm \
+  --query "{disk:disks[0].statuses[0].displayStatus, progress:status[0].message, sub:substatus[0].message}" -o json

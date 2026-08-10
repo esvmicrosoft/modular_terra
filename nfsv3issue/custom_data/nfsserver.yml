@@ -18,7 +18,8 @@ runcmd:
   - mkdir /exports
   - chmod 755 /exports
   - echo '/exports 10.0.0.0/8(rw,sync,no_root_squash)' > /etc/exports
-  - sed -i -e '/vers3/s/^# *//' /etc/nfs.conf
+  - sed -i -e '/vers3/{/s/^# *//;s/.$/y/}' /etc/nfs.conf
+  - sed -i -e '/vers4/{s/^# *//;s/.$/n/}' /etc/nfs.conf
   - systemctl disable firewalld
   - systemctl mask firewalld
   - reboot

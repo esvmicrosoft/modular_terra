@@ -122,3 +122,10 @@ variable "nics" {
   type        = string
   default     = "1"
 }
+
+variable disk_controller_type {
+  description = "NVMe or SCSI disk type"
+  type        = string
+  default     = "SCSI"
+}
+

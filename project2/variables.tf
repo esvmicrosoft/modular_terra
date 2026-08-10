@@ -19,13 +19,18 @@ variable "cidr_bits" {
 
 variable "payg" {
   type = list(object({
-    pubip           = bool
-    publisher       = string
-    offer           = string
-    sku             = string
-    image_version   = string
-    custom_data    =  string
-    encrypt         = bool
+    pubip                = bool
+    name                 = string
+    publisher            = string
+    offer                = string
+    sku                  = string
+    image_version        = string
+    size                 = string
+    custom_data          = string
+    encrypt              = optional(bool, false)
+    network_acceleration = optional(bool, false)
+    nics                 = optional(string,"1")
+    nvme                 = optional(string, "SCSI")
   }))
   default = [
     {

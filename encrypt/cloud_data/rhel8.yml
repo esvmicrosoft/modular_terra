@@ -1,0 +1,13 @@
+#cloud-config
+
+#boot_cmd:
+#  - until [ -e /dev/disk/azure/scsi1/lun0 ]; do sleep 5; done
+#
+#package_upgrade: false
+#
+#mounts:
+#  - [ "/dev/mapper/testvg-testlv", "/data", "ext4", "defaults", "0", "0" ]
+#
+runcmd:
+  - date
+

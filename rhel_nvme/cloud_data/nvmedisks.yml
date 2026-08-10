@@ -1,0 +1,12 @@
+#cloud-config
+runcmd:
+  - mkfs.xfs -L DATA1 /dev/nvme0n2
+  - mkfs.xfs -L DATA2 /dev/nvme0n3
+  - mkdir /data{1,2}
+  - echo "LABEL=DATA1  /data1 auto nofail,defaults 0 0" >> /etc/fstab
+  - echo "LABEL=DATA2  /data2 auto nofail,defaults 0 0" >> /etc/fstab
+  - systemctl daemon-reload
+  - mount /data1
+  - mount /data2
+  - touch /data1/data1 /data2/data2
+

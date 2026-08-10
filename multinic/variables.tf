@@ -41,9 +41,10 @@ variable "payg" {
     image_version = "latest",
     size          = "Standard_D2s_v5",
     custom_data   = "custom_data/no_change.yml",
-    encrypt       = false,
-    network_acceleration = false,
-    nics          = "1"
+    encrypt         = optional(bool, false)
+    network_acceleration = optional(bool, false)
+    nics            = optional(string,"1")
+    nvme            = optional(string, "SCSI")
     },
     {
     pubip         = false,

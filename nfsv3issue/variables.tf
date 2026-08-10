@@ -19,84 +19,75 @@ variable "cidr_bits" {
 
 variable "payg" {
   type = list(object({
-    pubip           = bool
-    name            = string
-    publisher       = string
-    offer           = string
-    sku             = string
-    image_version   = string
-    size            = string
-    custom_data     = string
-    encrypt         = bool
-    network_acceleration = bool
-    nics            = string
+    pubip                = bool
+    name                 = string
+    publisher            = string
+    offer                = string
+    sku                  = string
+    image_version        = string
+    size                 = string
+    custom_data          = string
+    encrypt              = optional(bool, false)
+    network_acceleration = optional(bool, false)
+    nics                 = optional(string,"1")
+    nvme                 = optional(string, "SCSI")
   }))
   default = [
     {
-    pubip         = true,
-    name          = "nfs3server",
-    publisher     = "almalinux",
-    offer         = "almalinux-x86_64",
-    sku           = "9-gen2",
-    image_version = "latest",
-    size          = "Standard_D2s_v3",
-    custom_data   = "custom_data/nfsserver.yml",
-    encrypt       = false,
+    pubip                = true,
+    name                 = "nfs3server",
+    publisher            = "almalinux",
+    offer                = "almalinux-x86_64",
+    sku                  = "9-gen2",
+    image_version        = "latest",
+    size                 = "Standard_D2s_v3",
+    custom_data          = "custom_data/nfsserver.yml",
     network_acceleration = true,
-    nics = 1
     },
     {
-    pubip         = true,
-    name          = "rhel9client",
-    publisher     = "redhat",
-    offer         = "rhel",
-    sku           = "9-lvm-gen2",
-    image_version = "latest",
-    size          = "Standard_D2s_v3",
-    custom_data   = "custom_data/nfsclient.yml",
-    encrypt       = false,
-    network_acceleration = true,
-    nics = 1
+    pubip                = true
+    name                 = "rhel10c"
+    publisher            = "redhat"
+    offer                = "rhel"
+    sku                  = "10-lvm-gen2"
+    image_version        = "latest"
+    size                 = "Standard_D2s_v3",
+    custom_data          = "custom_data/nfsclient.yml",
+    network_acceleration = true
     },
     {
-    pubip         = true,
-    name          = "rhel8client",
-    publisher     = "redhat",
-    offer         = "rhel",
-    sku           = "86-gen2",
-    image_version = "latest",
-    size          = "Standard_D2s_v3",
-    custom_data   = "custom_data/nfsclient.yml",
-    encrypt       = false,
+    pubip                = true,
+    name                 = "rhel9c",
+    publisher            = "redhat",
+    offer                = "rhel",
+    sku                  = "9-lvm-gen2",
+    image_version        = "latest",
+    size                 = "Standard_D2s_v3",
+    custom_data          = "custom_data/nfsclient.yml",
     network_acceleration = true,
-    nics = 1
     },
     {
-    pubip         = true,
-    name          = "marinerclient",
-    publisher     = "MicrosoftCBLMariner",
-    offer         = "azure-linux-3",
-    sku           = "azure-linux-3-gen2",
-    image_version = "latest",
-    size          = "Standard_D2s_v3",
-    custom_data   = "custom_data/nochange.yml",
-    encrypt       = false,
+    pubip                = true,
+    name                 = "rhel86c",
+    publisher            = "redhat",
+    offer                = "rhel",
+    sku                  = "86-gen2",
+    image_version        = "latest",
+    size                 = "Standard_D2s_v3",
+    custom_data          = "custom_data/nfsclient.yml",
     network_acceleration = true,
-    nics = 1
     },
     {
-    pubip         = true,
-    name          = "marinerclientii",
-    publisher     = "MicrosoftCBLMariner",
-    offer         = "azure-linux-3",
-    sku           = "azure-linux-3-gen2",
-    image_version = "latest",
-    size          = "Standard_B4s_v2",
-    custom_data   = "custom_data/nochange.yml",
-    encrypt       = false,
+    pubip                = true,
+    name                 = "azl4c",
+    publisher            = "MicrosoftCBLMariner",
+    offer                = "azure-linux-3",
+    sku                  = "azure-linux-3-gen2",
+    image_version        = "latest",
+    size                 = "Standard_D2s_v3",
+    custom_data          = "custom_data/nochange.yml",
     network_acceleration = true,
-    nics = 1
-    }
+    },
 #    {
 #    pubip         = true,
 #    name          = "alma9client",
