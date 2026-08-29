@@ -15,6 +15,7 @@ resource "azurerm_key_vault" "diskencrypt" {
   enabled_for_deployment          = true
   enabled_for_template_deployment = true
   purge_protection_enabled        = false
+  rbac_authorization_enabled      = true
   tags = {
      SecurityControl =  "Ignore"
   } 
@@ -68,4 +69,33 @@ resource "azurerm_key_vault_key" "diskencrypt" {
 #    expire_after         = "P90D"
 #    notify_before_expiry = "P29D"
 #  }
+}
+
+resource "azurerm_private_dns_zone" "dns" {
+  depends_on      = [ module.myrg ]
+  name = "privatelink.vaultcore.azure.net"
+  resource_group_name = var.rg_name
+}
+
+resource "azurerm_private_endpoint" "pep" {
+  depends_on      = [ 
+                      module.myrg,
+                      module.network
+                    ]
+  name = "kv-pep"
+  location = var.location
+  resource_group_name = var.rg_name 
+  subnet_id = module.network.subnets_ids[0]
+ 
+  private_service_connection {
+    name = "kv-connection"
+    is_manual_connection = false
+    private_connection_resource_id = azurerm_key_vault.diskencrypt.id
+    subresource_names = ["vault"]
+  }
+
+  private_dns_zone_group {
+    name = "dns-group"
+    private_dns_zone_ids = [azurerm_private_dns_zone.dns.id]
+  }
 }

@@ -30,9 +30,9 @@ module payg {
 #  avsetid             = ""
   encrypt             = var.payg[count.index]["encrypt"]
 
-  keyvaultid          = var.payg[count.index]["encrypt"] ? azurerm_key_vault.diskencrypt.id : null
-  keyvaulturi         = var.payg[count.index]["encrypt"] ? azurerm_key_vault.diskencrypt.vault_uri : null
-  diskencryptkey      = var.payg[count.index]["encrypt"] ? azurerm_key_vault_key.diskencrypt.id : null
+#  keyvaultid          = var.payg[count.index]["encrypt"] ? azurerm_key_vault.diskencrypt.id : null
+#  keyvaulturi         = var.payg[count.index]["encrypt"] ? azurerm_key_vault.diskencrypt.vault_uri : null
+#  diskencryptkey      = var.payg[count.index]["encrypt"] ? azurerm_key_vault_key.diskencrypt.id : null
 
   resource_group       = var.rg_name
   location             = var.location

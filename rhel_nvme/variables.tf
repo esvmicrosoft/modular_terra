@@ -42,7 +42,6 @@ variable "payg" {
     image_version        = "latest"
     size                 = "Standard_D2ds_v6"
     custom_data          = "cloud_data/nvmedisks.yml"
-    encrypt              = false
     network_acceleration = true
     nics                 = "1"
     nvme                 = "NVMe"
@@ -56,7 +55,6 @@ variable "payg" {
     image_version        = "latest"
     size                 = "Standard_D2ds_v6"
     custom_data          = "cloud_data/nvmedisks.yml"
-    encrypt              = false
     network_acceleration = true
     nics                 = "1"
     nvme                 = "NVMe"
@@ -70,7 +68,6 @@ variable "payg" {
     image_version        = "latest"
     size                 = "Standard_E2s_v6"
     custom_data          = "cloud_data/nvmedisks.yml"
-    encrypt              = false
     network_acceleration = true
     nics                 = "1"
     nvme                 = "NVMe"
@@ -84,7 +81,6 @@ variable "payg" {
     image_version        = "latest"
     size                 = "Standard_D2ds_v6"
     custom_data          = "cloud_data/nvmedisks.yml"
-    encrypt              = false
     network_acceleration = true
     nics                 = "1"
     nvme                 = "NVMe"

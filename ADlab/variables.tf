@@ -133,9 +133,14 @@ variable "byos" {
     offer           = string
     sku             = string
     image_version   = string
+    size            = string
     custom_data    =  string
-    encrypt         = bool
+    encrypt              = optional(bool, false)
+    network_acceleration = optional(bool, false)
+    nics                 = optional(string,"1")
+    nvme                 = optional(string, "SCSI")
   }))
   default = [
   ]
 }
+

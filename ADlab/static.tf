@@ -59,15 +59,18 @@ module "controller22" {
 
 
 module "jumphost" {
+
   source               = "../modules/machines/payg"
   depends_on           = [
                            module.myrg,
                            module.static_network,
                          ]
 
+  provided             = "20260601"
   name                 = "jumphost"
-  priv_ip              = cidrhost(module.static_network.subnets_cidrs[0], 7)
-  nic_subnetid         = module.static_network.subnets_ids[0]
+  priv_index           = 7
+  cidr_list            = module.static_network.subnets_cidrs
+  nic_subnetid         = module.static_network.subnets_ids
 
   pubip                = true
   publisher            = "canonical"
@@ -76,10 +79,12 @@ module "jumphost" {
   image_version        = "latest"
 
   size                 = "Standard_D2s_v4"
+  network_acceleration = false
+  nics                 = 1
+  disk_controller_type = "SCSI"
 
   encrypt              = false
 
-  storage_account     = null
   resource_group      = var.rg_name
   location            = var.location
 

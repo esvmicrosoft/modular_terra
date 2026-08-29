@@ -87,6 +87,8 @@ output "ip_address" {
 
 resource "azurerm_virtual_machine_extension" "bootstrap" {
 
+  count    =  var.encrypt ? 1 : 0
+
   name                 = "bootstrap_extension"
   virtual_machine_id   = azurerm_linux_virtual_machine.machine.id
   publisher            = "Microsoft.Azure.Extensions"
