@@ -39,14 +39,14 @@ variable "payg" {
   }))
   default = [
     {
-      pubip                = true,
-      name                 = "sles12",
-      publisher            = "suse",
-      offer                = "sles-sap-12-sp5",
-      sku                  = "gen2",
-      image_version        = "latest",
-      size                 = "Standard_D2s_v4",
-      custom_data          = "custom_data/sles12.yml",
+      pubip         = true,
+      name          = "sles12",
+      publisher     = "suse",
+      offer         = "sles-sap-12-sp5",
+      sku           = "gen2",
+      image_version = "latest",
+      size          = "Standard_D2s_v4",
+      custom_data   = "custom_data/sles12.yml",
     }
   ]
 }
