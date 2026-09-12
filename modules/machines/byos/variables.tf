@@ -97,3 +97,8 @@ variable "avsetid" {
   description = "Availability set used for VM"
   default     = null
 }
+
+variable "pubkey" {
+  description = "Public key for admin user"
+  default     = "~/.ssh/azureuser_key.pub"
+}
