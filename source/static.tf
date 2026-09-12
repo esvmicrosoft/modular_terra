@@ -33,7 +33,6 @@ module "jumphost" {
     module.windows_network,
   ]
 
-  provided     = 20260601
   name         = "jumphost"
   priv_index   = 6
   cidr_list    = module.windows_network.subnets_cidrs

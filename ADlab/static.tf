@@ -66,7 +66,6 @@ module "jumphost" {
     module.network_ad2022,
   ]
 
-  provided     = "20260601"
   name         = "jumphost"
   priv_index   = 7
   cidr_list    = module.network_ad2022.subnets_cidrs

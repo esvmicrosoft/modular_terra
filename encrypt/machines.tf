@@ -10,7 +10,6 @@ module "payg" {
     module.network
   ]
 
-  provided     = 20260601
   name         = var.payg[count.index]["name"]
   priv_index   = count.index + 6
   cidr_list    = module.network.subnets_cidrs

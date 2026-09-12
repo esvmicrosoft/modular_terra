@@ -10,7 +10,6 @@ module "machines" {
     module.static_network
   ]
 
-  provided     = 20260601
   name         = var.payg[count.index]["name"]
   priv_index   = count.index + 6
   cidr_list    = module.static_network.subnets_cidrs
