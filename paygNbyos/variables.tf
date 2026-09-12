@@ -25,7 +25,7 @@ variable "payg" {
     offer                = string
     sku                  = string
     image_version        = string
-    size                 = string
+    size                 = optional(string, "Standard_D2s_v4")
     custom_data          = optional(string, "custom_data/no_change.yml")
     encrypt              = optional(bool, false)
     network_acceleration = optional(bool, false)
@@ -58,14 +58,18 @@ variable "payg" {
 
 variable "byos" {
   type = list(object({
-    pubip         = bool
-    name          = string
-    publisher     = string
-    offer         = string
-    sku           = string
-    image_version = string
-    custom_data   = optional(string, "custom_data/no_change.yml")
-    encrypt       = optional(bool, false)
+    pubip                = bool
+    name                 = string
+    publisher            = string
+    offer                = string
+    sku                  = string
+    image_version        = string
+    size                 = optional(string, "Standard_D2s_v4")
+    custom_data          = optional(string, "custom_data/no_change.yml")
+    encrypt              = optional(bool, false)
+    network_acceleration = optional(bool, false)
+    nics                 = optional(string, "1")
+    nvme                 = optional(string, "SCSI")
   }))
   default = [
     {
