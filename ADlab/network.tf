@@ -1,103 +1,67 @@
 
-module "static_network" {
+module "network0" {
   source          = "../modules/network"
   depends_on      = [ module.myrg ]
-  name            = "static"
+  name            = "network0"
   location        = var.location
   resource_group  = var.rg_name
   cidr            = "10.0.0.0/16"
   cidr_bits       = var.cidr_bits
 }
 
-module "network" {
+module "network1" {
   source          = "../modules/network"
   depends_on      = [ module.myrg ]
-  name            = "adlab"
+  name            = "network1"
   location        = var.location
   resource_group  = var.rg_name
   cidr            = "10.1.0.0/16"
   cidr_bits       = var.cidr_bits
 }
 
-resource "azurerm_network_security_group" "nsg" {
-  name                  = "${var.rg_name}-vnet-NSG-CASG"
+module "network2" {
+  source          = "../modules/network"
   depends_on      = [ module.myrg ]
-  location              = var.location
-  resource_group_name   = var.rg_name
-
-  security_rule {
-    name                       = "vnetaccess"
-    priority                   = 3000
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_address_prefix      = "VirtualNetwork"
-    source_port_range          = "*"
-    destination_address_prefix = "*"
-    destination_port_range     = "*"
-  }
+  name            = "adlab"
+  location        = var.location
+  resource_group  = var.rg_name
+  cidr            = "10.2.0.0/16"
+  cidr_bits       = var.cidr_bits
 }
 
-resource "azurerm_public_ip" "natgw_publicip" {
-  name                = "nat-gateway-publicIP"
-  depends_on          = [ module.network, module.myrg ]
-  location            = var.location
-  resource_group_name = var.rg_name
-  allocation_method   = "Static"
-  sku                 = "Standard"
-}
-
-resource "azurerm_nat_gateway" "natgw" {
-  name                    = "natgw"
-  depends_on              = [ module.network, module.myrg ]
-  location                = var.location
-  resource_group_name     = var.rg_name
-  sku_name                = "Standard"
-  idle_timeout_in_minutes = 10
-}
-
-resource "azurerm_nat_gateway_public_ip_association" "natgw_ip" {
-  nat_gateway_id       = azurerm_nat_gateway.natgw.id
-  public_ip_address_id = azurerm_public_ip.natgw_publicip.id
-}
-
-resource "azurerm_subnet_nat_gateway_association" "private_network_escape" {
-  depends_on       = [ module.network, module.myrg ]
-  subnet_id        = module.network.subnets_ids[0]
-  nat_gateway_id   = azurerm_nat_gateway.natgw.id
-}
-
-resource "azurerm_subnet_network_security_group_association" "static_nsg_asocc" {
-  depends_on = [ module.static_network, module.myrg ]
-  count      = length(module.static_network.subnets_ids)
-
-  subnet_id                 = module.static_network.subnets_ids[count.index]
-  network_security_group_id = azurerm_network_security_group.nsg.id
-}
-
-resource "azurerm_subnet_network_security_group_association" "adlab_nsg_asocc" {
-  depends_on = [ module.network, module.myrg ]
-  count      = length(module.network.subnets_ids)
-
-  subnet_id                 = module.network.subnets_ids[count.index]
-  network_security_group_id = azurerm_network_security_group.nsg.id
-}
-
-resource "azurerm_virtual_network_peering" "staticnnetpeer" {
+resource "azurerm_virtual_network_peering" "peer01" {
   name = "staticnnetpeer"
-  depends_on = [ module.network, module.static_network, module.myrg ]
+  depends_on = [ module.network0, module.network1, module.myrg ]
   
   resource_group_name    = var.rg_name
-  virtual_network_name   = module.static_network.network_name
-  remote_virtual_network_id  = module.network.network_id
+  virtual_network_name   = module.network0.network_name
+  remote_virtual_network_id  = module.network1.network_id
 }
 
-resource "azurerm_virtual_network_peering" "adlabnetpeer" {
+resource "azurerm_virtual_network_peering" "peer10" {
   name = "adlabnetpeer"
-  depends_on = [ module.network, module.static_network, module.myrg ]
+  depends_on = [ module.network0, module.network1, module.myrg ]
 
   resource_group_name   = var.rg_name
-  virtual_network_name   = module.network.network_name
-  remote_virtual_network_id  = module.static_network.network_id
+  virtual_network_name   = module.network1.network_name
+  remote_virtual_network_id  = module.network0.network_id
+}
+
+resource "azurerm_virtual_network_peering" "peer02" {
+  name = "staticnnetpeer"
+  depends_on = [ module.network0, module.network2, module.myrg ]
+  
+  resource_group_name    = var.rg_name
+  virtual_network_name   = module.network0.network_name
+  remote_virtual_network_id  = module.network2.network_id
+}
+
+resource "azurerm_virtual_network_peering" "peer20" {
+  name = "adlabnetpeer"
+  depends_on = [ module.network0, module.network2, module.myrg ]
+
+  resource_group_name   = var.rg_name
+  virtual_network_name   = module.network2.network_name
+  remote_virtual_network_id  = module.network0.network_id
 }
 

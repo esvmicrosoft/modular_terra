@@ -83,6 +83,11 @@ variable "network_acceleration" {
   default     = false
 }
 
+variable "encrypt" {
+  description = "whether to encrypt the machine or not"
+  default     = false
+}
+
 variable "keyvaultid" {
   description = "Azure keyvault id for disk encryption"
   type  = string
@@ -99,11 +104,6 @@ variable "diskencryptkey" {
   description = "key used for disk encryption"
   type  = string
   default  = null
-}
-
-variable "encrypt" {
-  description = "whether to encrypt the machine or not"
-  default     = false
 }
 
 variable "storage_account" {

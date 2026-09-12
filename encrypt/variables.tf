@@ -35,7 +35,7 @@ variable "payg" {
   default = [
     {
       pubip            = true
-      name             = "rhel88g2"
+      name             = "rhel8g2"
       publisher        = "redhat"
       offer            = "rhel"
       sku              = "810-gen2"
@@ -45,7 +45,7 @@ variable "payg" {
       encrypt          = true
     },
     {
-      name             = "ubuntu2004g2"
+      name             = "ubu2004g2"
       pubip            = true
       publisher        = "canonical"
       offer            = "0001-com-ubuntu-server-focal"

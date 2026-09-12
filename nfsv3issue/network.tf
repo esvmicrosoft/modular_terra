@@ -15,17 +15,6 @@ resource "azurerm_network_security_group" "nsg" {
   resource_group_name   = var.rg_name
 
   security_rule {
-    name                       = "azcloud"
-    priority                   = 2000
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_address_prefix      = "AzureCloud"
-    source_port_range          = "*"
-    destination_address_prefix = "*"
-    destination_port_ranges    = ["22","3389"]
-  }
-  security_rule {
     name                       = "vnetaccess"
     priority                   = 3000
     direction                  = "Inbound"

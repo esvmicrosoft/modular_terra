@@ -3,12 +3,12 @@ module "controller25" {
     source                   = "../modules/machines/adc"
     depends_on               = [
                                  module.myrg,
-                                 module.static_network
+                                 module.network0
                                ]
 
     server_name              = "controller25"
-    nic0_ip                  = cidrhost(module.static_network.subnets_cidrs[0], 5)
-    nic0_subnetid            = module.static_network.subnets_ids[0]
+    nic0_ip                  = cidrhost(module.network0.subnets_cidrs[0], 5)
+    nic0_subnetid            = module.network0.subnets_ids[0]
 
     pubip                    = true
     publisher                = "MicrosoftWindowsServer"
@@ -32,12 +32,12 @@ module "controller22" {
     source                   = "../modules/machines/adc"
     depends_on               = [
                                  module.myrg,
-                                 module.static_network
+                                 module.network1
                                ]
 
     server_name              = "controller22"
-    nic0_ip                  = cidrhost(module.static_network.subnets_cidrs[0], 6)
-    nic0_subnetid            = module.static_network.subnets_ids[0]
+    nic0_ip                  = cidrhost(module.network1.subnets_cidrs[0], 5)
+    nic0_subnetid            = module.network1.subnets_ids[0]
 
     pubip                    = true
     publisher                = "MicrosoftWindowsServer"
@@ -63,14 +63,14 @@ module "jumphost" {
   source               = "../modules/machines/payg"
   depends_on           = [
                            module.myrg,
-                           module.static_network,
+                           module.network0,
                          ]
 
   provided             = "20260601"
   name                 = "jumphost"
   priv_index           = 7
-  cidr_list            = module.static_network.subnets_cidrs
-  nic_subnetid         = module.static_network.subnets_ids
+  cidr_list            = module.network0.subnets_cidrs
+  nic_subnetid         = module.network0.subnets_ids
 
   pubip                = true
   publisher            = "canonical"
