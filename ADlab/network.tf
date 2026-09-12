@@ -1,67 +1,67 @@
 
-module "network0" {
+module "network_ad2022" {
   source         = "../modules/network"
   depends_on     = [module.myrg]
-  name           = "network0"
+  name           = "network_ad2022"
+  location       = var.location
+  resource_group = var.rg_name
+  cidr           = "10.100.0.0/16"
+  cidr_bits      = var.cidr_bits
+}
+
+module "network_ad2025" {
+  source         = "../modules/network"
+  depends_on     = [module.myrg]
+  name           = "network_ad_2025"
+  location       = var.location
+  resource_group = var.rg_name
+  cidr           = "10.200.0.0/16"
+  cidr_bits      = var.cidr_bits
+}
+
+module "network" {
+  source         = "../modules/network"
+  depends_on     = [module.myrg]
+  name           = "servers"
   location       = var.location
   resource_group = var.rg_name
   cidr           = "10.0.0.0/16"
   cidr_bits      = var.cidr_bits
 }
 
-module "network1" {
-  source         = "../modules/network"
-  depends_on     = [module.myrg]
-  name           = "network1"
-  location       = var.location
-  resource_group = var.rg_name
-  cidr           = "10.1.0.0/16"
-  cidr_bits      = var.cidr_bits
-}
-
-module "network2" {
-  source         = "../modules/network"
-  depends_on     = [module.myrg]
-  name           = "adlab"
-  location       = var.location
-  resource_group = var.rg_name
-  cidr           = "10.2.0.0/16"
-  cidr_bits      = var.cidr_bits
-}
-
 resource "azurerm_virtual_network_peering" "peer01" {
   name       = "staticnnetpeer"
-  depends_on = [module.network0, module.network1, module.myrg]
+  depends_on = [module.network_ad2022, module.network_ad2025, module.myrg]
 
   resource_group_name       = var.rg_name
-  virtual_network_name      = module.network0.network_name
-  remote_virtual_network_id = module.network1.network_id
+  virtual_network_name      = module.network_ad2022.network_name
+  remote_virtual_network_id = module.network_ad2025.network_id
 }
 
 resource "azurerm_virtual_network_peering" "peer10" {
   name       = "adlabnetpeer"
-  depends_on = [module.network0, module.network1, module.myrg]
+  depends_on = [module.network_ad2022, module.network_ad2025, module.myrg]
 
   resource_group_name       = var.rg_name
-  virtual_network_name      = module.network1.network_name
-  remote_virtual_network_id = module.network0.network_id
+  virtual_network_name      = module.network_ad2025.network_name
+  remote_virtual_network_id = module.network_ad2022.network_id
 }
 
 resource "azurerm_virtual_network_peering" "peer02" {
   name       = "staticnnetpeer"
-  depends_on = [module.network0, module.network2, module.myrg]
+  depends_on = [module.network_ad2022, module.network, module.myrg]
 
   resource_group_name       = var.rg_name
-  virtual_network_name      = module.network0.network_name
-  remote_virtual_network_id = module.network2.network_id
+  virtual_network_name      = module.network_ad2022.network_name
+  remote_virtual_network_id = module.network.network_id
 }
 
 resource "azurerm_virtual_network_peering" "peer20" {
   name       = "adlabnetpeer"
-  depends_on = [module.network0, module.network2, module.myrg]
+  depends_on = [module.network_ad2022, module.network, module.myrg]
 
   resource_group_name       = var.rg_name
-  virtual_network_name      = module.network2.network_name
-  remote_virtual_network_id = module.network0.network_id
+  virtual_network_name      = module.network.network_name
+  remote_virtual_network_id = module.network_ad2022.network_id
 }
 

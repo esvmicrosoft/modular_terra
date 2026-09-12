@@ -1,9 +1,4 @@
 
-variable "provided" {
-  description = "last modified timestamp" 
-  type = number
-}
-
 variable "required" {
   description = "last modified timestamp" 
   default = 20260601
