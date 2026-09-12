@@ -16,16 +16,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
 #          DIRS=$(find . -mindepth 1 -maxdepth 1 -type d \
+#           ! -name ".git" \
+#           ! -name ".github" \
+#           ! -name "modules" \
+#           ! -name "source"  \
 
       - id: discover
         shell: bash
         run: |
           DIRS=( echo ADlab mana \
-            ! -name ".git" \
-            ! -name ".github" \
-            ! -name "modules" \
-            ! -name "source"  \
             | sed 's|^\./||' \
             | jq -R -s -c 'split("\n")[:-1]')
 
