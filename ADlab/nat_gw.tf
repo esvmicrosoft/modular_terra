@@ -2,7 +2,7 @@
 
 resource "azurerm_public_ip" "natgw_publicip" {
   name                = "nat-gateway-publicIP"
-  depends_on          = [module.network2, module.myrg]
+  depends_on          = [module.network, module.myrg]
   location            = var.location
   resource_group_name = var.rg_name
   allocation_method   = "Static"
@@ -11,7 +11,7 @@ resource "azurerm_public_ip" "natgw_publicip" {
 
 resource "azurerm_nat_gateway" "natgw" {
   name                    = "natgw"
-  depends_on              = [module.network2, module.myrg]
+  depends_on              = [module.network, module.myrg]
   location                = var.location
   resource_group_name     = var.rg_name
   sku_name                = "Standard"
@@ -24,8 +24,8 @@ resource "azurerm_nat_gateway_public_ip_association" "natgw_ip" {
 }
 
 resource "azurerm_subnet_nat_gateway_association" "private_network_escape" {
-  depends_on     = [module.network2, module.myrg]
-  subnet_id      = module.network2.subnets_ids[0]
+  depends_on     = [module.network, module.myrg]
+  subnet_id      = module.network.subnets_ids[0]
   nat_gateway_id = azurerm_nat_gateway.natgw.id
 }
 

@@ -55,7 +55,7 @@ resource "azurerm_linux_virtual_machine" "machine" {
 
     admin_ssh_key {
       username    = "azureuser"
-      public_key  = file("~/.ssh/azureuser_key.pub")
+      public_key  = file(var.pubkey)
     }
 
     boot_diagnostics {

@@ -124,3 +124,8 @@ variable disk_controller_type {
   default     = "SCSI"
 }
 
+variable pubkey {
+  description = "location of public key"
+  type        = string
+  default     = "~/.ssh/azureuser_key.pub"
+}

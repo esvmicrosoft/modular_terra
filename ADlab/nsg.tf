@@ -18,27 +18,27 @@ resource "azurerm_network_security_group" "nsg" {
   }
 }
 
-resource "azurerm_subnet_network_security_group_association" "network0_nsg_asocc" {
-  depends_on = [module.network0, module.myrg]
-  count      = length(module.network0.subnets_ids)
+resource "azurerm_subnet_network_security_group_association" "network_ad2022_nsg_asocc" {
+  depends_on = [module.network_ad2022, module.myrg]
+  count      = length(module.network_ad2022.subnets_ids)
 
-  subnet_id                 = module.network0.subnets_ids[count.index]
+  subnet_id                 = module.network_ad2022.subnets_ids[count.index]
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-resource "azurerm_subnet_network_security_group_association" "network1_nsg_asocc" {
-  depends_on = [module.network1, module.myrg]
-  count      = length(module.network1.subnets_ids)
+resource "azurerm_subnet_network_security_group_association" "network_ad2025_nsg_asocc" {
+  depends_on = [module.network_ad2025, module.myrg]
+  count      = length(module.network_ad2025.subnets_ids)
 
-  subnet_id                 = module.network1.subnets_ids[count.index]
+  subnet_id                 = module.network_ad2025.subnets_ids[count.index]
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-resource "azurerm_subnet_network_security_group_association" "network2_nsg_asocc" {
-  depends_on = [module.network2, module.myrg]
-  count      = length(module.network2.subnets_ids)
+resource "azurerm_subnet_network_security_group_association" "network_nsg_asocc" {
+  depends_on = [module.network, module.myrg]
+  count      = length(module.network.subnets_ids)
 
-  subnet_id                 = module.network2.subnets_ids[count.index]
+  subnet_id                 = module.network.subnets_ids[count.index]
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
