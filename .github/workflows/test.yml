@@ -26,7 +26,7 @@ jobs:
       - id: discover
         shell: bash
         run: |
-          DIRS=$( find . -mindept 1 -maxdept 1 -type d | grep -E "ADlab|mana" \
+          DIRS=$( find . -mindepth 1 -maxdepth 1 -type d | grep -E "ADlab|mana" \
             | sed 's|^\./||' \
             | jq -R -s -c 'split("\n")[:-1]')
 
