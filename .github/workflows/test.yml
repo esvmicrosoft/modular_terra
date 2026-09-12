@@ -21,7 +21,7 @@ jobs:
       - id: discover
         shell: bash
         run: |
-          DIRS=( echo ADlab mana
+          DIRS=( echo ADlab mana \
             ! -name ".git" \
             ! -name ".github" \
             ! -name "modules" \
