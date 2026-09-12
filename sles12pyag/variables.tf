@@ -29,19 +29,19 @@ variable "payg" {
     custom_data          = string
     encrypt              = optional(bool, false)
     network_acceleration = optional(bool, false)
-    nics                 = optional(string,"1")
+    nics                 = optional(string, "1")
     nvme                 = optional(string, "SCSI")
   }))
   default = [
     {
-    pubip         = true,
-    name          = "sles12sap",
-    publisher     = "suse",
-    offer         = "sles-sap-12-sp5",
-    sku           = "gen2",
-    image_version = "latest"
-    custom_data   = "/dev/null"
-    encrypt       = false
+      pubip         = true,
+      name          = "sles12sap",
+      publisher     = "suse",
+      offer         = "sles-sap-12-sp5",
+      sku           = "gen2",
+      image_version = "latest"
+      custom_data   = "/dev/null"
+      encrypt       = false
     }
   ]
 }

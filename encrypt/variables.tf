@@ -11,14 +11,14 @@ variable "prefix" {
   description = "A three character string for personal localization"
 }
 
-variable "cidr_bits" { 
+variable "cidr_bits" {
   description = "Number of bits dedicated to subnetting"
-  type  = string 
-  default = "8"
+  type        = string
+  default     = "8"
 }
 
 variable "payg" {
-  type = list(object({  
+  type = list(object({
     pubip                = optional(bool, false)
     name                 = string
     publisher            = string
@@ -29,31 +29,31 @@ variable "payg" {
     custom_data          = string
     encrypt              = optional(bool, false)
     network_acceleration = optional(bool, false)
-    nics                 = optional(string,"1")
+    nics                 = optional(string, "1")
     nvme                 = optional(string, "SCSI")
   }))
   default = [
     {
-      pubip            = true
-      name             = "rhel8g2"
-      publisher        = "redhat"
-      offer            = "rhel"
-      sku              = "810-gen2"
-      image_version    = "latest"
-      size             = "Standard_D2s_v4",
-      custom_data      = "cloud_data/rhel8.yml"
-      encrypt          = true
+      pubip         = true
+      name          = "rhel8g2"
+      publisher     = "redhat"
+      offer         = "rhel"
+      sku           = "810-gen2"
+      image_version = "latest"
+      size          = "Standard_D2s_v4",
+      custom_data   = "cloud_data/rhel8.yml"
+      encrypt       = true
     },
     {
-      name             = "ubu2004g2"
-      pubip            = true
-      publisher        = "canonical"
-      offer            = "0001-com-ubuntu-server-focal"
-      sku              = "20_04-lts-gen2"
-      image_version    = "latest"
-      size             = "Standard_D2s_v4",
-      custom_data      = "cloud_data/ubuntu.yml"
-      encrypt          = true
+      name          = "ubu2004g2"
+      pubip         = true
+      publisher     = "canonical"
+      offer         = "0001-com-ubuntu-server-focal"
+      sku           = "20_04-lts-gen2"
+      image_version = "latest"
+      size          = "Standard_D2s_v4",
+      custom_data   = "cloud_data/ubuntu.yml"
+      encrypt       = true
     }
   ]
 }
@@ -79,17 +79,17 @@ variable "payg" {
 
 variable "byos" {
   type = list(object({
-    pubip           = bool
-    name            = string
-    publisher       = string
-    offer           = string
-    sku             = string
-    image_version   = string
-    size            = string
-    custom_data    =  string
+    pubip                = bool
+    name                 = string
+    publisher            = string
+    offer                = string
+    sku                  = string
+    image_version        = string
+    size                 = string
+    custom_data          = string
     encrypt              = optional(bool, false)
     network_acceleration = optional(bool, false)
-    nics                 = optional(string,"1")
+    nics                 = optional(string, "1")
     nvme                 = optional(string, "SCSI")
   }))
   default = [

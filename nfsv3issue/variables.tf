@@ -29,129 +29,129 @@ variable "payg" {
     custom_data          = string
     encrypt              = optional(bool, false)
     network_acceleration = optional(bool, false)
-    nics                 = optional(string,"1")
+    nics                 = optional(string, "1")
     nvme                 = optional(string, "SCSI")
   }))
   default = [
     {
-    pubip                = true,
-    name                 = "nfs3server",
-    publisher            = "almalinux",
-    offer                = "almalinux-x86_64",
-    sku                  = "9-gen2",
-    image_version        = "latest",
-    size                 = "Standard_D2s_v3",
-    custom_data          = "custom_data/nfsserver.yml",
-    network_acceleration = true,
+      pubip                = true,
+      name                 = "nfs3server",
+      publisher            = "almalinux",
+      offer                = "almalinux-x86_64",
+      sku                  = "9-gen2",
+      image_version        = "latest",
+      size                 = "Standard_D2s_v3",
+      custom_data          = "custom_data/nfsserver.yml",
+      network_acceleration = true,
     },
     {
-    pubip                = true
-    name                 = "rhel10c"
-    publisher            = "redhat"
-    offer                = "rhel"
-    sku                  = "10-lvm-gen2"
-    image_version        = "latest"
-    size                 = "Standard_D2s_v3",
-    custom_data          = "custom_data/nfsclient.yml",
-    network_acceleration = true
+      pubip                = true
+      name                 = "rhel10c"
+      publisher            = "redhat"
+      offer                = "rhel"
+      sku                  = "10-lvm-gen2"
+      image_version        = "latest"
+      size                 = "Standard_D2s_v3",
+      custom_data          = "custom_data/nfsclient.yml",
+      network_acceleration = true
     },
     {
-    pubip                = true,
-    name                 = "rhel9c",
-    publisher            = "redhat",
-    offer                = "rhel",
-    sku                  = "9-lvm-gen2",
-    image_version        = "latest",
-    size                 = "Standard_D2s_v3",
-    custom_data          = "custom_data/nfsclient.yml",
-    network_acceleration = true,
+      pubip                = true,
+      name                 = "rhel9c",
+      publisher            = "redhat",
+      offer                = "rhel",
+      sku                  = "9-lvm-gen2",
+      image_version        = "latest",
+      size                 = "Standard_D2s_v3",
+      custom_data          = "custom_data/nfsclient.yml",
+      network_acceleration = true,
     },
     {
-    pubip                = true,
-    name                 = "rhel86c",
-    publisher            = "redhat",
-    offer                = "rhel",
-    sku                  = "86-gen2",
-    image_version        = "latest",
-    size                 = "Standard_D2s_v3",
-    custom_data          = "custom_data/nfsclient.yml",
-    network_acceleration = true,
+      pubip                = true,
+      name                 = "rhel86c",
+      publisher            = "redhat",
+      offer                = "rhel",
+      sku                  = "86-gen2",
+      image_version        = "latest",
+      size                 = "Standard_D2s_v3",
+      custom_data          = "custom_data/nfsclient.yml",
+      network_acceleration = true,
     },
     {
-    pubip                = true,
-    name                 = "azl4c",
-    publisher            = "MicrosoftCBLMariner",
-    offer                = "azure-linux-3",
-    sku                  = "azure-linux-3-gen2",
-    image_version        = "latest",
-    size                 = "Standard_D2s_v3",
-    custom_data          = "custom_data/nochange.yml",
-    network_acceleration = true,
+      pubip                = true,
+      name                 = "azl4c",
+      publisher            = "MicrosoftCBLMariner",
+      offer                = "azure-linux-3",
+      sku                  = "azure-linux-3-gen2",
+      image_version        = "latest",
+      size                 = "Standard_D2s_v3",
+      custom_data          = "custom_data/nochange.yml",
+      network_acceleration = true,
     },
-#    {
-#    pubip         = true,
-#    name          = "alma9client",
-#    publisher     = "almalinux",
-#    offer         = "almalinux-x86_64",
-#    sku           = "9-gen2",
-#    image_version = "latest",
-#    size          = "Standard_D2s_v3",
-#    custom_data   = "custom_data/nfsclient.yml",
-#    encrypt       = false,
-#    network_acceleration = true
-#    },
-#    {
-#    pubip         = true,
-#    name          = "alma8client",
-#    publisher     = "almalinux",
-#    offer         = "almalinux-x86_64",
-#    sku           = "8-gen2",
-#    image_version = "latest",
-#    size          = "Standard_D2s_v3",
-#    custom_data   = "custom_data/nfsclient.yml",
-#    encrypt       = false,
-#    network_acceleration = true
-#    }
+    #    {
+    #    pubip         = true,
+    #    name          = "alma9client",
+    #    publisher     = "almalinux",
+    #    offer         = "almalinux-x86_64",
+    #    sku           = "9-gen2",
+    #    image_version = "latest",
+    #    size          = "Standard_D2s_v3",
+    #    custom_data   = "custom_data/nfsclient.yml",
+    #    encrypt       = false,
+    #    network_acceleration = true
+    #    },
+    #    {
+    #    pubip         = true,
+    #    name          = "alma8client",
+    #    publisher     = "almalinux",
+    #    offer         = "almalinux-x86_64",
+    #    sku           = "8-gen2",
+    #    image_version = "latest",
+    #    size          = "Standard_D2s_v3",
+    #    custom_data   = "custom_data/nfsclient.yml",
+    #    encrypt       = false,
+    #    network_acceleration = true
+    #    }
   ]
 }
 
 variable "byos" {
   type = list(object({
-    pubip           = bool
-    name            = string
-    publisher       = string
-    offer           = string
-    sku             = string
-    image_version   = string
-    size            = string
-    custom_data    =  string
-    encrypt         = bool
+    pubip                = bool
+    name                 = string
+    publisher            = string
+    offer                = string
+    sku                  = string
+    image_version        = string
+    size                 = string
+    custom_data          = string
+    encrypt              = bool
     network_acceleration = bool
   }))
   default = [
-#    {
-#    pubip         = true,
-#    name          = "rocky8i",
-#    publisher     = "resf",
-#    offer         = "rockylinux-x86_64",
-#    sku           = "8-lvm",
-#    image_version = "latest",
-#    size          = "Standard_D2s_v5",
-#    custom_data   = "/home/esv/lab/createlab/cloud_data/no_change.yml",
-#    encrypt       = false,
-#    network_acceleration = true
-#    },
-#    {
-#    pubip         = true,
-#    name          = "rocky9i",
-#    publisher     = "resf",
-#    offer         = "rockylinux-x86_64",
-#    sku           = "9-lvm",
-#    image_version = "latest",
-#    size          = "Standard_D2s_v5",
-#    custom_data   = "/home/esv/lab/createlab/cloud_data/no_change.yml",
-#    encrypt       = false,
-#    network_acceleration = true
-#    }
+    #    {
+    #    pubip         = true,
+    #    name          = "rocky8i",
+    #    publisher     = "resf",
+    #    offer         = "rockylinux-x86_64",
+    #    sku           = "8-lvm",
+    #    image_version = "latest",
+    #    size          = "Standard_D2s_v5",
+    #    custom_data   = "/home/esv/lab/createlab/cloud_data/no_change.yml",
+    #    encrypt       = false,
+    #    network_acceleration = true
+    #    },
+    #    {
+    #    pubip         = true,
+    #    name          = "rocky9i",
+    #    publisher     = "resf",
+    #    offer         = "rockylinux-x86_64",
+    #    sku           = "9-lvm",
+    #    image_version = "latest",
+    #    size          = "Standard_D2s_v5",
+    #    custom_data   = "/home/esv/lab/createlab/cloud_data/no_change.yml",
+    #    encrypt       = false,
+    #    network_acceleration = true
+    #    }
   ]
 }
