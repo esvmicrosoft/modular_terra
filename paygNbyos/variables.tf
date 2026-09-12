@@ -26,7 +26,7 @@ variable "payg" {
     sku                  = string
     image_version        = string
     size                 = string
-    custom_data          = string
+    custom_data          = optional(string, "custom_data/no_change.yml")
     encrypt              = optional(bool, false)
     network_acceleration = optional(bool, false)
     nics                 = optional(string, "1")
@@ -39,9 +39,9 @@ variable "payg" {
       publisher     = "almalinux",
       offer         = "almalinux-x86_64",
       sku           = "8-gen2",
-      image_version = "latest",
-      custom_data   = "/home/esv/lab/createlab/cloud_data/no_change.yml",
-      encrypt       = false
+      image_version = "latest"
+      size          = "Standard_D2s_v4"
+
     },
     {
       pubip         = true,
@@ -49,9 +49,9 @@ variable "payg" {
       publisher     = "almalinux",
       offer         = "almalinux-x86_64",
       sku           = "9-gen2",
-      image_version = "latest",
-      custom_data   = "/home/esv/lab/createlab/cloud_data/no_change.yml",
-      encrypt       = false
+      image_version = "latest"
+      size          = "Standard_D2s_v4"
+
     }
   ]
 }
@@ -64,8 +64,8 @@ variable "byos" {
     offer         = string
     sku           = string
     image_version = string
-    custom_data   = string
-    encrypt       = bool
+    custom_data   = optional(string, "custom_data/no_change.yml")
+    encrypt       = optional(bool, false)
   }))
   default = [
     {
@@ -74,9 +74,9 @@ variable "byos" {
       publisher     = "ciq",
       offer         = "rocky",
       sku           = "rocky-8-6-free",
-      image_version = "latest",
-      custom_data   = "/home/esv/lab/createlab/cloud_data/no_change.yml",
-      encrypt       = false
+      image_version = "latest"
+      size          = "Standard_D2s_v4"
+
     },
     {
       pubip         = true,
@@ -84,9 +84,8 @@ variable "byos" {
       publisher     = "ciq",
       offer         = "rocky",
       sku           = "rocky-9-0-free",
-      image_version = "latest",
-      custom_data   = "/home/esv/lab/createlab/cloud_data/no_change.yml",
-      encrypt       = false
+      image_version = "latest"
+      size          = "Standard_D2s_v4"
     }
   ]
 }

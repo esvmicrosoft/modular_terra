@@ -40,6 +40,7 @@ variable "payg" {
       offer         = "sles-sap-15-sp5",
       sku           = "gen2",
       image_version = "latest"
+      size          = "Standard_D2s_v4",
       custom_data   = "/dev/null"
       encrypt       = false
     }
