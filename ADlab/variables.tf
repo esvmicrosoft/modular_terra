@@ -34,7 +34,7 @@ variable "payg" {
     custom_data          = string
     encrypt              = optional(bool, false)
     network_acceleration = optional(bool, false)
-    nics                 = optional(string,"1")
+    nics                 = optional(string, "1")
     nvme                 = optional(string, "SCSI")
   }))
   default = [
@@ -63,60 +63,60 @@ variable "payg" {
       network_acceleration = true
     },
     {
-      pubip = false
-      name = "rhel10"
-      publisher = "redhat"
-      offer     = "rhel"
-      sku       = "10-lvm-gen2"
-      image_version = "latest"
+      pubip                = false
+      name                 = "rhel10"
+      publisher            = "redhat"
+      offer                = "rhel"
+      sku                  = "10-lvm-gen2"
+      image_version        = "latest"
       size                 = "Standard_D2s_v4",
       custom_data          = "custom_data/rhel10.yml",
       encrypt              = false,
       network_acceleration = true
     },
     {
-      pubip = false
-      name = "rhel8"
-      publisher = "redhat"
-      offer     = "rhel"
-      sku       = "8-lvm-gen2"
-      image_version = "latest"
+      pubip                = false
+      name                 = "rhel8"
+      publisher            = "redhat"
+      offer                = "rhel"
+      sku                  = "8-lvm-gen2"
+      image_version        = "latest"
       size                 = "Standard_D2s_v4",
       custom_data          = "custom_data/rhel.yml",
       encrypt              = false,
       network_acceleration = true
     },
     {
-      pubip = false
-      name = "ubuntu2404"
-      publisher = "canonical"
-      offer     = "ubuntu-24_04-lts"
-      sku       = "server"
-      image_version = "latest"
+      pubip                = false
+      name                 = "ubuntu2404"
+      publisher            = "canonical"
+      offer                = "ubuntu-24_04-lts"
+      sku                  = "server"
+      image_version        = "latest"
       size                 = "Standard_D2s_v4",
       custom_data          = "custom_data/ubuntu.yml",
       encrypt              = false,
       network_acceleration = true
     },
     {
-      pubip = false
-      name = "sles15"
-      publisher = "suse"
-      offer     = "sles-sap-15-sp6"
-      sku       = "gen2"
-      image_version = "latest"
+      pubip                = false
+      name                 = "sles15"
+      publisher            = "suse"
+      offer                = "sles-sap-15-sp6"
+      sku                  = "gen2"
+      image_version        = "latest"
       size                 = "Standard_D2s_v4",
       custom_data          = "custom_data/rhel.yml",
       encrypt              = false,
       network_acceleration = true
     },
     {
-      pubip = false
-      name = "ubuntu2204"
-      publisher = "canonical"
-      offer     = "0001-com-ubuntu-server-jammy"
-      sku       = "22_04-lts-gen2"
-      image_version = "latest"
+      pubip                = false
+      name                 = "ubuntu2204"
+      publisher            = "canonical"
+      offer                = "0001-com-ubuntu-server-jammy"
+      sku                  = "22_04-lts-gen2"
+      image_version        = "latest"
       size                 = "Standard_D2s_v4",
       custom_data          = "custom_data/ubuntu.yml",
       encrypt              = false,
@@ -127,17 +127,17 @@ variable "payg" {
 
 variable "byos" {
   type = list(object({
-    pubip           = bool
-    name            = string
-    publisher       = string
-    offer           = string
-    sku             = string
-    image_version   = string
-    size            = string
-    custom_data    =  string
+    pubip                = bool
+    name                 = string
+    publisher            = string
+    offer                = string
+    sku                  = string
+    image_version        = string
+    size                 = string
+    custom_data          = string
     encrypt              = optional(bool, false)
     network_acceleration = optional(bool, false)
-    nics                 = optional(string,"1")
+    nics                 = optional(string, "1")
     nvme                 = optional(string, "SCSI")
   }))
   default = [
