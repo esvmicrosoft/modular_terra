@@ -23,7 +23,7 @@ jobs:
         shell: bash
         run: |
           DIRS=$(find . -mindepth 1 -maxdepth 1 -type d \
-            | grep -Ev ".git|sources|modules" \
+            | grep -Ev ".git|source|modules" \
             | sed 's|^\./||' \
             | jq -R -s -c 'split("\n")[:-1]')
 
