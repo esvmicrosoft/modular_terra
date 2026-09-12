@@ -26,7 +26,7 @@ jobs:
       - id: discover
         shell: bash
         run: |
-          DIRS=( echo ADlab mana \
+          DIRS=$( echo ADlab mana \
             | sed 's|^\./||' \
             | jq -R -s -c 'split("\n")[:-1]')
 
