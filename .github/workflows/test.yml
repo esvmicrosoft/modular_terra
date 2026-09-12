@@ -1,1 +1,59 @@
+name: Terraform Validation
 
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      dirs: ${{ steps.discover.outputs.dirs }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: discover
+        shell: bash
+        run: |
+          DIRS=$(find . -mindepth 1 -maxdepth 1 -type d \
+            ! -name ".git" \
+            ! -name ".github" \
+            | sed 's|^\./||' \
+            | jq -R -s -c 'split("\n")[:-1]')
+
+          echo "dirs=${DIRS}" >> "$GITHUB_OUTPUT"
+
+  validate:
+    needs: discover
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: ${{ fromJson(needs.discover.outputs.dirs) }}
+
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: latest
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Init
+        run: terraform init -backend=false
+
+      - name: Terraform Validate
+        run: terraform validate
